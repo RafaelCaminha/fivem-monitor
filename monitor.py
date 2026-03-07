@@ -80,7 +80,7 @@ def fetch_server_data():
             all_points.append(point)
             
         except Exception as e:
-            print(f"❌ Erro ao buscar {server_name}: {e}")
+            print(f"❌ Erro ao buscar {server_name}: {e}\n {response.text()} \n {response.status_code()}")
             import traceback
             traceback.print_exc()
         
