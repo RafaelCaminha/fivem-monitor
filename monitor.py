@@ -11,7 +11,7 @@ SERVERS = {
     "ameby5": "Bloodlines",
     "89vpk5": "BHRP"
 }
-API_URL = "https://servers-frontend.fivem.net/api/servers/single/{}"
+API_URL = "https://servers-frontend.fivem.net/api/servers/single/"
 
 # Configuração InfluxDB (via Environment Variables)
 INFLUX_URL = os.getenv('INFLUX_URL')
