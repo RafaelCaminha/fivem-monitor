@@ -29,11 +29,9 @@ def fetch_server_data():
             print(f"\n📡 Consultando servidor: {server_name}")
             print(f"ID: {server_id}")
             
-            # Path Parameter substituído corretamente
             url = API_URL.format(server_id)
             print(f"URL: {url}")
             
-            # Headers para evitar bloqueio
             headers = {
                 'User-Agent': 'FiveM-Monitor/1.0',
                 'Accept': 'application/json'
@@ -46,8 +44,6 @@ def fetch_server_data():
             )
             
             print(f"Status Code: {response.status_code}")
-            print(f"Headers: {response.headers}")
-            print(f"Content-Type: {response.headers.get('Content-Type')}")
             
             # Verificar se é JSON válido
             try:
@@ -58,10 +54,6 @@ def fetch_server_data():
                 print(f"📦 Conteúdo bruto (primeiras 500 chars):")
                 print(response.text[:500])
                 continue
-            
-            # Debug: Mostrar estrutura completa da API
-            print(f"📦 Estrutura da API:")
-            print(json.dumps(data, indent=2, ensure_ascii=False)[:1000])
             
             # Verificar quais campos existem
             print(f"🔍 Campos disponíveis: {list(data.keys())}")
