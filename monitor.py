@@ -25,7 +25,7 @@ def fetch_server_data():
     
     for server_id, server_name in SERVERS.items():
         try:
-            response = requests.get(f"{API_URL.format(server_id)}", timeout=10)
+            response = requests.get(f"API_URL.format(server_id)", timeout=10)
             data = response.json()
             
             online = data.get('online', 0)
