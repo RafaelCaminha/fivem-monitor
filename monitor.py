@@ -33,32 +33,40 @@ def fetch_server_data():
             url = API_URL.format(server_id)
             print(f"URL: {url}")
             
+            # Headers para evitar bloqueio
+            headers = {
+                'User-Agent': 'FiveM-Monitor/1.0',
+                'Accept': 'application/json'
+            }
+            
             response = requests.get(
                 url, 
                 timeout=10,
-                headers={
-                    'User-Agent': 'FiveM-Monitor/1.0'
-                }
+                headers=headers
             )
             
             print(f"Status Code: {response.status_code}")
+            print(f"Headers: {response.headers}")
+            print(f"Content-Type: {response.headers.get('Content-Type')}")
             
-            if response.status_code != 200:
-                print(f"❌ Erro HTTP: {response.status_code}")
-                print(f"Response: {response.text}")
+            # Verificar se é JSON válido
+            try:
+                data = response.json()
+                print(f"✅ JSON válido!")
+            except json.JSONDecodeError as e:
+                print(f"❌ Erro ao parsear JSON: {e}")
+                print(f"📦 Conteúdo bruto (primeiras 500 chars):")
+                print(response.text[:500])
                 continue
-            
-            data = response.json()
             
             # Debug: Mostrar estrutura completa da API
             print(f"📦 Estrutura da API:")
-            print(json.dumps(data, indent=2, ensure_ascii=False))
+            print(json.dumps(data, indent=2, ensure_ascii=False)[:1000])
             
             # Verificar quais campos existem
             print(f"🔍 Campos disponíveis: {list(data.keys())}")
             
             # CAMPOS CORRETOS DA API
-            # A API retorna: Data.clients e Data.sv_maxclients
             if 'Data' in data:
                 clients = data['Data'].get('clients', 0)
                 max_clients = data['Data'].get('sv_maxclients', 0) or data['Data'].get('svMaxclients', 0)
@@ -83,6 +91,9 @@ def fetch_server_data():
             print(f"❌ Erro ao buscar {server_name}: {e}")
             import traceback
             traceback.print_exc()
+        
+        # Delay entre requisições para evitar rate limiting
+        time.sleep(2)
     
     return all_points
 
