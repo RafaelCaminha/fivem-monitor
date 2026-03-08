@@ -38,6 +38,3 @@ jobs:
       - name: Log de erro
         if: failure()
         run: echo "⚠️ O monitoramento falhou. Verifique os logs."
-          personal_token: ${{ secrets.PERSONAL_TOKEN }}
-          committer_email: 'cron@example.com'
-          committer_name: 'Ember.js Cron CI'
