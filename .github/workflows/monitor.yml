@@ -38,27 +38,6 @@ jobs:
       - name: Log de erro
         if: failure()
         run: echo "⚠️ O monitoramento falhou. Verifique os logs."
-        
-  trigger-ci:
-    permissions:
-      contents: read 
-      checks: read
-
-    name: Trigger cron build
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        branch: [main] # List of branches to run the cron on
-    steps:
-      - uses: kategengler/ci-cron@v1
-        with:
-          branch: ${{ matrix.branch }}
-          # This must use a personal access token because of a Github Actions
-          # limitation where it will not trigger workflows from pushes from
-          # other workflows with the token it provides.
-          # The PERSONAL_ACCESS secret must be a token with `repo` scope.
-          # See https://help.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           committer_email: 'cron@example.com'
           committer_name: 'Ember.js Cron CI'
